@@ -72,7 +72,7 @@ class Character {
         // collision
         var that = this;
         this.game.entities.forEach(function (entity) {
-            // This will be filled out as we add entities to collide with to the game.
+            // TODO: fill this out as entities are added to the game.
         });
 
     };
