@@ -15,6 +15,9 @@ class Character {
         //     this.animators.push(new Animator(sprite, 0, 0, 192, 192, 4, 0.15));
         // }
 
+        this.lastBB = new BoundingBox(this.x, this.y, 39, 64);
+        this.updateBB();
+
         const sprite = ASSET_MANAGER.getAsset("./sprites/Astronaut_Player.png");
         this.animators = {
             "idle": new Animator(sprite, 7, 65, 32, 35, 1, 0.15),
@@ -63,6 +66,15 @@ class Character {
 
         if (this.x > 1024) this.x = 0;
         if (this.x < 0) this.x = 1024;
+
+        this.updateBB();
+
+        // collision
+        var that = this;
+        this.game.entities.forEach(function (entity) {
+            // This will be filled out as we add entities to collide with to the game.
+        });
+
     };
 
     draw(ctx) {
@@ -70,9 +82,31 @@ class Character {
             ctx.save();
             ctx.scale(-1, 1);
             this.animators[state].drawFrame(this.game.clockTick, ctx, -(this.x) - 50, this.y);
+            this.drawBoundingBox(ctx);
             ctx.restore();
         } else {
             this.animators[state].drawFrame(this.game.clockTick, ctx, this.x, this.y);
+            this.drawBoundingBox(ctx);
         }
     };
+
+    // TODO: make this function debug mode only
+    /* TODO: consider moving this or other bounding box functions to boundingbox class
+        to lighten code in character class. */
+    drawBoundingBox(ctx) {
+        ctx.strokeStyle = "red";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
+    };
+
+    updateBB() {
+        this.lastBB = this.BB;
+
+        if (this.facingleft) {
+            this.BB = new BoundingBox(-(this.x) - 50, this.y, 39, 64);
+        } else {
+            this.BB = new BoundingBox(this.x, this.y, 39, 64);
+        }
+    };
+
 }
