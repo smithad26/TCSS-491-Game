@@ -10,11 +10,6 @@ class Character {
         this.velocity = { x : 0, y : 0 };
         this.fallAcc = 562.5;
 
-        // for (const f of files) {
-        //     const sprite = ASSET_MANAGER.getAsset(`./sprites/Warrior_${f}.png`);
-        //     this.animators.push(new Animator(sprite, 0, 0, 192, 192, 4, 0.15));
-        // }
-
         this.lastBB = new BoundingBox(this.x, this.y, 39, 64);
         this.updateBB();
 
