@@ -1,4 +1,4 @@
-let state = 0;
+let state = "idle";
 
 class Character {
     constructor(game) {

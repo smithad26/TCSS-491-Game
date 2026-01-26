@@ -11,16 +11,8 @@ ASSET_MANAGER.downloadAll(() => {
 	const ctx = canvas.getContext("2d");
 	ctx.imageSmoothingEnabled = "false";
 
-	// player
-	gameEngine.addEntity(new Character(gameEngine));
-
-	// traps
-	gameEngine.addEntity(new Spikes(gameEngine));
-	gameEngine.addEntity(new Laser(gameEngine));
-
-	// items
-	gameEngine.addEntity(new Shield(gameEngine));
-	gameEngine.addEntity(new Key(gameEngine));
+	new GameController(gameEngine);
+	gameEngine.addEntity(new HUD(gameEngine));
 
 	gameEngine.init(ctx);
 
