@@ -4,6 +4,7 @@ const ASSET_MANAGER = new AssetManager();
 
 ASSET_MANAGER.queueDownload("./sprites/Astronaut_Player.png");
 ASSET_MANAGER.queueDownload("./sprites/items.png");
+ASSET_MANAGER.queueDownload("./sprites/traps.png");
 
 ASSET_MANAGER.downloadAll(() => {
 	const canvas = document.getElementById("gameWorld");
@@ -14,6 +15,7 @@ ASSET_MANAGER.downloadAll(() => {
 	gameEngine.addEntity(new Character(gameEngine));
 
 	// traps
+	gameEngine.addEntity(new Spikes(gameEngine));
 	gameEngine.addEntity(new Laser(gameEngine));
 
 	// items
