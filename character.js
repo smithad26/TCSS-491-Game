@@ -10,6 +10,7 @@ class Character {
         this.velocity = { x : 0, y : 0 };
         this.fallAcc = 562.5;
 
+        // lastBB assigned here to avoid game start collision bug.
         this.lastBB = new BoundingBox(this.x, this.y, 39, 64);
         this.updateBB();
 
@@ -68,6 +69,26 @@ class Character {
         var that = this;
         this.game.entities.forEach(function (entity) {
             // TODO: fill this out as entities are added to the game.
+            if (entity.BB && that.BB.collide(entity.BB)) {
+                // These two ifs are for vertical collisions (like landing on ground)
+                if (that.velocity.y > 0) {
+                    // TODO: deal with falling collisions as platforms are added.
+                }
+                if (that.velocity.y < 0) {
+                    // jumping
+                }
+                // These ifs are for other collisions
+                if (entity instanceof Shield) {
+                    entity.removeFromWorld = true;
+                }
+                if (entity instanceof Key) {
+                    entity.removeFromWorld = true;
+                }
+                if (entity instanceof Spikes) {
+                    that.game.controller.damage();
+                }
+
+            }
         });
 
     };
@@ -77,31 +98,22 @@ class Character {
             ctx.save();
             ctx.scale(-1, 1);
             this.animators[state].drawFrame(this.game.clockTick, ctx, -(this.x) - 50, this.y);
-            this.drawBoundingBox(ctx);
             ctx.restore();
         } else {
             this.animators[state].drawFrame(this.game.clockTick, ctx, this.x, this.y);
-            this.drawBoundingBox(ctx);
         }
-    };
-
-    // TODO: make this function debug mode only
-    /* TODO: consider moving this or other bounding box functions to boundingbox class
-        to lighten code in character class. */
-    drawBoundingBox(ctx) {
-        ctx.strokeStyle = "red";
-        ctx.lineWidth = 2;
-        ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
+        this.BB.drawBoundingBox(ctx);
     };
 
     updateBB() {
         this.lastBB = this.BB;
 
         if (this.facingleft) {
-            this.BB = new BoundingBox(-(this.x) - 50, this.y, 39, 64);
+            this.BB = new BoundingBox(this.x + 10, this.y, 39, 64);
         } else {
             this.BB = new BoundingBox(this.x, this.y, 39, 64);
         }
+
     };
 
 }
