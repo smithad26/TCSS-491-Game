@@ -3,14 +3,11 @@ class Spikes {
         this.game = game;
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/traps.png");
         this.animation = new Animator(this.spritesheet, 16, 25, 16, 16, 1, 0.2);
-        this.updateBB();
 
         this.x = 600;
         this.y = 525;
-    }
 
-    updateBB() {
-
+        this.BB = new BoundingBox(this.x, this.y, 32, 32);
     }
 
     update() {
@@ -19,6 +16,7 @@ class Spikes {
 
     draw(ctx) {
         this.animation.drawFrame(this.game.clockTick, ctx, this.x, this.y);
+        this.BB.drawBoundingBox(ctx);
     }
 }
 class Laser {
@@ -26,10 +24,12 @@ class Laser {
         this.game = game;
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/traps.png");
         this.animation = new Animator(this.spritesheet, 16, 49, 16, 16, 1, 0.2);
-        this.updateBB();
 
         this.x = 800;
         this.y = 525;
+
+        this.BB = new BoundingBox(this.x, this.y, 32, 32);
+        this.updateBB();
     }
 
     updateBB() {
@@ -42,5 +42,6 @@ class Laser {
 
     draw(ctx) {
         this.animation.drawFrame(this.game.clockTick, ctx, this.x, this.y);
+        this.BB.drawBoundingBox(ctx);
     }
 }
