@@ -68,14 +68,32 @@ class Character {
         // collision
         var that = this;
         this.game.entities.forEach(function (entity) {
-            // TODO: fill this out as entities are added to the game.
+            // These two ifs are for vertical collisions (like landing on ground)
             if (entity.BB && that.BB.collide(entity.BB)) {
                 // These two ifs are for vertical collisions (like landing on ground)
                 if (that.velocity.y > 0) {
                     // TODO: deal with falling collisions as platforms are added.
+                    if (entity instanceof Block1) {
+                        // Check if the character was above the platform in the last frame
+                        if (that.lastBB.bottom <= entity.BB.top) {
+                            // Land on top of the platform
+                            that.y = entity.BB.top - that.BB.height;
+                            that.velocity.y = 0;
+                            that.updateBB();
+                        }
+                    }
                 }
                 if (that.velocity.y < 0) {
-                    // jumping
+                    // Jumping up - check if hitting bottom of platform
+                    if (entity instanceof Block1) {
+                        // Check if the character was below the platform in the last frame
+                        if (that.lastBB.top >= entity.BB.bottom) {
+                            // Hit bottom of platform
+                            that.y = entity.BB.bottom;
+                            that.velocity.y = 0;
+                            that.updateBB();
+                        }
+                    }
                 }
                 // These ifs are for other collisions
                 if (entity instanceof Shield) {

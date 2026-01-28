@@ -37,11 +37,14 @@ class GameController {
 
         // traps
         this.game.addEntity(new Spikes(this.game));
-        this.game.addEntity(new Laser(this.game));
+        this.game.addEntity(new LaserProjectile(this.game));
 
         // items
         this.game.addEntity(new Shield(this.game));
         this.game.addEntity(new Key(this.game));
+
+        // blocks
+        this.game.addEntity(new Block1(this.game));
 
         this.game.addEntity(new HUD(this.game));
     }
