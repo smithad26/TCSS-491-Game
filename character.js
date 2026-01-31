@@ -9,6 +9,7 @@ class Character {
         this.facingleft = false;
         this.velocity = { x : 0, y : 0 };
         this.fallAcc = 562.5;
+        this.shieldActive = false;
 
         // lastBB assigned here to avoid game start collision bug.
         this.lastBB = new BoundingBox(this.x, this.y, 39, 64);
@@ -68,15 +69,20 @@ class Character {
         // collision
         var that = this;
         this.game.entities.forEach(function (entity) {
-            // These two ifs are for vertical collisions (like landing on ground)
             if (entity.BB && that.BB.collide(entity.BB)) {
                 // These two ifs are for vertical collisions (like landing on ground)
                 if (that.velocity.y > 0) {
-                    // TODO: deal with falling collisions as platforms are added.
                     if (entity instanceof Block1) {
                         // Check if the character was above the platform in the last frame
                         if (that.lastBB.bottom <= entity.BB.top) {
                             // Land on top of the platform
+                            that.y = entity.BB.top - that.BB.height;
+                            that.velocity.y = 0;
+                            that.updateBB();
+                        }
+                    }
+                    if (entity instanceof Spikes) {
+                        if (that.lastBB.bottom <= entity.BB.top) {
                             that.y = entity.BB.top - that.BB.height;
                             that.velocity.y = 0;
                             that.updateBB();
@@ -94,16 +100,55 @@ class Character {
                             that.updateBB();
                         }
                     }
+                    if (entity instanceof Spikes) {
+                        if (that.lastBB.top >= entity.BB.bottom) {
+                            that.y = entity.BB.bottom;
+                            that.velocity.y = 0;
+                            that.updateBB();
+                        }
+                    }
                 }
-                // These ifs are for other collisions
+                // Hit block from side
+                if (entity instanceof Block1) {
+                    if (that.BB.collide(entity.leftBB)) {
+                        that.x = entity.BB.left - (entity.BB.width + 8);
+                        // This line below stops players from getting stuck
+                        // in block after leftward shift.
+                        if (that.facingleft) that.x = entity.BB.left - (entity.BB.width + 18);
+                        if (that.velocity.x > 0) that.velocity.x = 0;
+                    } else if (that.BB.collide(entity.rightBB)) {
+                        that.x = entity.BB.right;
+                        if (that.velocity.x < 0) that.velocity.x = 0;
+                    }
+                    that.updateBB();
+                }
+                // Other collisions
                 if (entity instanceof Shield) {
                     entity.removeFromWorld = true;
+                    that.shieldActive = true;
                 }
                 if (entity instanceof Key) {
                     entity.removeFromWorld = true;
                 }
                 if (entity instanceof Spikes) {
-                    that.game.controller.damage();
+                    if (that.BB.collide(entity.leftBB)) {
+                        that.x = entity.BB.left - (entity.BB.width + 8);
+                        if (that.facingleft) that.x = entity.BB.left - (entity.BB.width + 18);
+                        if (that.velocity.x > 0) that.velocity.x = 0;
+                    } else if (that.BB.collide(entity.rightBB)) {
+                        that.x = entity.BB.right;
+                        if (that.velocity.x < 0) that.velocity.x = 0;
+                    }
+                    // Damage check and shield check here.
+                    if (that.shieldActive) {
+                        // This delays shield deactivation for 3 seconds.
+                        setInterval(function () {
+                            that.shieldActive = false;
+                            }, 3000);
+                    } else {
+                        that.game.controller.damage();
+                    }
+                    that.updateBB();
                 }
 
             }

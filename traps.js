@@ -8,6 +8,8 @@ class Spikes {
         this.y = 525;
 
         this.BB = new BoundingBox(this.x, this.y, 32, 32);
+        this.leftBB = new BoundingBox(this.x, this.y, 32 / 2, 32);
+        this.rightBB = new BoundingBox(this.x + 32 / 2, this.y, 32 / 2, 32);
     }
 
     update() {
