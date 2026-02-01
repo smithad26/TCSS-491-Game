@@ -41,9 +41,8 @@ class Character {
         }
 
         const groundY = 500;
-        const onGround = this.y >= groundY;
-        if ((keys["w"] || keys["ArrowUp"]) && onGround) { 
-            
+        var onGround = (this.y >= groundY) || (this.velocity.y === 0);
+        if ((keys["w"] || keys["ArrowUp"]) && onGround) {
             state = "jump"; 
             this.velocity.y = -550;
         }
@@ -60,6 +59,8 @@ class Character {
         if (!onGround) {
             state = "jump"
         }
+
+        if (this.y )
 
         if (this.x > 1024) this.x = 0;
         if (this.x < 0) this.x = 1024;
@@ -150,10 +151,8 @@ class Character {
                     }
                     that.updateBB();
                 }
-
             }
         });
-
     };
 
     draw(ctx) {
