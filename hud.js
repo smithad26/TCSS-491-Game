@@ -19,7 +19,7 @@ class HUD {
 
         if ((keys["Enter"])) {
             this.game.controller.lives = this.selection === 0 ? 20 : 1;
-            this.game.controller.loadLevel();
+            this.game.controller.loadLevel(levelOne);
         }
     }
 

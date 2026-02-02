@@ -1,13 +1,14 @@
 let state = "idle";
 
 class Character {
-    constructor(game) {
+    constructor(game, x, y) {
         this.game = game;
-        this.x = 50;
-        this.y = 0;
+        this.x = x;
+        this.y = y;
         this.speed = 400;
         this.facingleft = false;
         this.velocity = { x : 0, y : 0 };
+        this.onGround = false;
         this.fallAcc = 562.5;
         this.shieldActive = false;
 
@@ -40,9 +41,7 @@ class Character {
             this.facingleft = false; 
         }
 
-        const groundY = 500;
-        var onGround = (this.y >= groundY) || (this.velocity.y === 0);
-        if ((keys["w"] || keys["ArrowUp"]) && onGround) {
+        if ((keys["w"] || keys["ArrowUp"]) && this.onGround) {
             state = "jump"; 
             this.velocity.y = -550;
         }
@@ -51,21 +50,11 @@ class Character {
         this.velocity.y += this.fallAcc * TICK;
         this.y += this.velocity.y * TICK;
 
-        if (this.y > groundY) {
-            this.y = groundY;
-            this.velocity.y = 0;
-        }
-
-        if (!onGround) {
-            state = "jump"
-        }
-
-        if (this.y )
-
         if (this.x > 1024) this.x = 0;
         if (this.x < 0) this.x = 1024;
 
         this.updateBB();
+        this.onGround = false;
 
         // collision
         var that = this;
@@ -79,6 +68,7 @@ class Character {
                             // Land on top of the platform
                             that.y = entity.BB.top - that.BB.height;
                             that.velocity.y = 0;
+                            that.onGround = true;
                             that.updateBB();
                         }
                     }
@@ -153,6 +143,10 @@ class Character {
                 }
             }
         });
+
+        if (!this.onGround) {
+            state = "jump";
+        }
     };
 
     draw(ctx) {

@@ -1,11 +1,11 @@
 class Spikes {
-    constructor(game) {
+    constructor(game, x, y) {
         this.game = game;
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/traps.png");
         this.animation = new Animator(this.spritesheet, 16, 25, 16, 16, 1, 0.2);
 
-        this.x = 600;
-        this.y = 525;
+        this.x = x;
+        this.y = y;
 
         this.BB = new BoundingBox(this.x, this.y, 32, 32);
         this.leftBB = new BoundingBox(this.x, this.y, 32 / 2, 32);
@@ -22,13 +22,13 @@ class Spikes {
     }
 }
 class LaserProjectile {
-    constructor(game) {
+    constructor(game, x, y) {
         this.game = game;
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/traps.png");
         this.animation = new Animator(this.spritesheet, 16, 49, 16, 16, 1, 0.2);
 
-        this.x = 800;
-        this.y = 525;
+        this.x = x;
+        this.y = y;
 
         this.BB = new BoundingBox(this.x, this.y, 32, 32);
         this.updateBB();

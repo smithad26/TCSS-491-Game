@@ -4,6 +4,7 @@ class GameController {
         this.game.controller = this;
 
         this.lives = 0;
+        this.level = null;
     }
 
     clearEntities() {
@@ -25,28 +26,30 @@ class GameController {
             return;
         }
 
-        this.loadLevel();
+        this.loadLevel(this.level);
     }
 
-    // Later this will load the levels
-    loadLevel() {
+    loadLevel(level) {
+        this.level = level;
         this.clearEntities();
 
-        // player
-        this.game.addEntity(new Character(this.game));
-
-        // traps
-        this.game.addEntity(new Spikes(this.game));
-        this.game.addEntity(new LaserProjectile(this.game));
-
-        // items
-        this.game.addEntity(new Shield(this.game));
-        this.game.addEntity(new Key(this.game));
-
-        // blocks
-        this.game.addEntity(new Block1(this.game));
+        const entityTypes = {
+            blocks: Block1,
+            spikes: Spikes,
+            lasers: LaserProjectile,
+            shields: Shield,
+            keys: Key,
+        };
 
         this.game.addEntity(new HUD(this.game));
+
+        level.player && this.game.addEntity(new Character(this.game, level.player.x, level.player.y));
+        
+        for (const [key, EntityClass] of Object.entries(entityTypes)) {
+            level[key]?.forEach(item => {
+                this.game.addEntity(new EntityClass(this.game, item.x, item.y));
+            });
+        }
     }
 
     update() {
