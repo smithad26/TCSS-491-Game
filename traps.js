@@ -18,7 +18,7 @@ class Spikes {
 
     draw(ctx) {
         this.animation.drawFrame(this.game.clockTick, ctx, this.x, this.y);
-        this.BB.drawBoundingBox(ctx);
+        this.BB.drawBoundingBox(ctx, this.game);
     }
 }
 class LaserProjectile {
@@ -44,6 +44,6 @@ class LaserProjectile {
 
     draw(ctx) {
         this.animation.drawFrame(this.game.clockTick, ctx, this.x, this.y);
-        this.BB.drawBoundingBox(ctx);
+        this.BB.drawBoundingBox(ctx, this.game);
     }
 }

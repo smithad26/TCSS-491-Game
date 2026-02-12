@@ -13,9 +13,9 @@ class BoundingBox {
         return false;
     };
 
-    drawBoundingBox(ctx) {
+    drawBoundingBox(ctx, game) {
         ctx.strokeStyle = "red";
         ctx.lineWidth = 2;
-        ctx.strokeRect(this.x, this.y, this.width, this.height);
+        if (game.debugOn) ctx.strokeRect(this.x, this.y, this.width, this.height);
     };
 };

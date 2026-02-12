@@ -14,6 +14,9 @@ class GameEngine {
         this.mouse = null;
         this.wheel = null;
         this.keys = {};
+        this.prevKeys = {};
+
+        this.debugOn = false;
 
         // Options and the Details
         this.options = options || {
@@ -110,6 +113,8 @@ class GameEngine {
                 this.entities.splice(i, 1);
             }
         }
+
+        this.prevKeys = {...this.keys};
     };
 
     loop() {

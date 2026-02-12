@@ -16,7 +16,7 @@ class Shield {
 
     draw(ctx) {
         this.animation.drawFrame(this.game.clockTick, ctx, this.x, this.y);
-        this.BB.drawBoundingBox(ctx);
+        this.BB.drawBoundingBox(ctx, this.game);
     }
 }
 
@@ -38,6 +38,6 @@ class Key {
 
     draw(ctx) {
         this.animation.drawFrame(this.game.clockTick, ctx, this.x, this.y);
-        this.BB.drawBoundingBox(ctx);
+        this.BB.drawBoundingBox(ctx, this.game);
     }
 }

@@ -11,6 +11,9 @@ class Character {
         this.onGround = false;
         this.fallAcc = 562.5;
         this.shieldActive = false;
+        this.shieldHit = false;
+        this.shieldSprite = ASSET_MANAGER.getAsset("./sprites/items.png");
+        this.shieldAnimation = new Animator(this.shieldSprite, 9, 9, 16, 16, 1, 0.2, 20);
 
         // lastBB assigned here to avoid game start collision bug.
         this.lastBB = new BoundingBox(this.x, this.y, 39, 64);
@@ -25,6 +28,7 @@ class Character {
     };
 
     update() {
+
         state = "idle"
         const keys = this.game.keys;
         const TICK = this.game.clockTick;
@@ -76,6 +80,7 @@ class Character {
                         if (that.lastBB.bottom <= entity.BB.top) {
                             that.y = entity.BB.top - that.BB.height;
                             that.velocity.y = 0;
+                            that.onGround = true;
                             that.updateBB();
                         }
                     }
@@ -120,6 +125,7 @@ class Character {
                 }
                 if (entity instanceof Key) {
                     entity.removeFromWorld = true;
+                    that.game.controller.setKey(true);
                 }
                 if (entity instanceof Spikes) {
                     if (that.BB.collide(entity.leftBB)) {
@@ -132,9 +138,12 @@ class Character {
                     }
                     // Damage check and shield check here.
                     if (that.shieldActive) {
+                        if (!that.shieldHit) that.shieldAnimation = new Animator(that.shieldSprite, 9, 9, 16, 16, 2, 0.3, 20);
+                        that.shieldHit = true;
                         // This delays shield deactivation for 3 seconds.
                         setInterval(function () {
                             that.shieldActive = false;
+                            that.shieldHit = false;
                             }, 3000);
                     } else {
                         that.game.controller.damage();
@@ -154,11 +163,13 @@ class Character {
             ctx.save();
             ctx.scale(-1, 1);
             this.animators[state].drawFrame(this.game.clockTick, ctx, -(this.x) - 50, this.y);
+            if (this.shieldActive) this.shieldAnimation.drawFrame(this.game.clockTick, ctx, -(this.x) - 46, this.y - 40);
             ctx.restore();
         } else {
             this.animators[state].drawFrame(this.game.clockTick, ctx, this.x, this.y);
+            if (this.shieldActive) this.shieldAnimation.drawFrame(this.game.clockTick, ctx, this.x + 4, this.y - 40);
         }
-        this.BB.drawBoundingBox(ctx);
+        this.BB.drawBoundingBox(ctx, this.game);
     };
 
     updateBB() {

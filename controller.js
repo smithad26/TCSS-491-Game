@@ -4,6 +4,7 @@ class GameController {
         this.game.controller = this;
 
         this.lives = 0;
+        this.key = false;
         this.level = null;
     }
 
@@ -17,16 +18,22 @@ class GameController {
         return this.lives > 0;
     }
 
+    setKey(keyStatus) {
+        this.key = keyStatus;
+    }
+
     damage() {
-        this.lives--;
-
-        if (!this.isAlive()) {
-            this.clearEntities();
-            this.game.addEntity(new HUD(this.game));
-            return;
+        // Makes sure damage only applies if debug mode off
+        if (!this.game.debugOn) {
+            this.lives--;
+            this.key = false;
+            if (!this.isAlive()) {
+                this.clearEntities();
+                this.game.addEntity(new HUD(this.game));
+                return;
+            }
+            this.loadLevel(this.level);
         }
-
-        this.loadLevel(this.level);
     }
 
     loadLevel(level) {
