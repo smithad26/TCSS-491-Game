@@ -45,7 +45,7 @@ class Character {
             this.facingleft = false; 
         }
 
-        if ((keys["w"] || keys["ArrowUp"]) && this.onGround) {
+        if ((keys["w"] || keys["ArrowUp"] || keys[" "]) && this.onGround) {
             state = "jump"; 
             this.velocity.y = -550;
         }
@@ -54,7 +54,15 @@ class Character {
         this.velocity.y += this.fallAcc * TICK;
         this.y += this.velocity.y * TICK;
 
-        if (this.x > 1024) this.x = 0;
+        if (this.x > 1024) {
+            currentLevel++;
+            if (currentLevel < levels_list.length) {
+                this.game.controller.loadLevel(levels_list[currentLevel]);
+            } else {
+                // Display Ending, restart game
+                currentLevel = 0;
+            }
+        }
         if (this.x < 0) this.x = 1024;
 
         this.updateBB();

@@ -30,6 +30,7 @@ class GameController {
             if (!this.isAlive()) {
                 this.clearEntities();
                 this.game.addEntity(new HUD(this.game));
+                currentLevel = 0;
                 return;
             }
             this.loadLevel(this.level);

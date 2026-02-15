@@ -41,37 +41,21 @@ class HUD {
             } else if (this.selection === 1) {
                 this.game.controller.lives = 1;
                 this.game.debugOn = false;
-            } else {
+            } else if (this.selection === 2) {
                 this.game.controller.lives = 1;
                 this.game.debugOn = true;
-            }
-            this.game.controller.loadLevel(levelOne);
+            } 
+
+            // start game and timer
+            this.game.controller.loadLevel(levels_list[currentLevel]);
+
         }
     }
 
     draw(ctx) {
         if (!this.game.controller.isAlive()) {
-            ctx.save();
-            ctx.setTransform(1, 0, 0, 1, 0, 0);
-
-            ctx.fillStyle = "white";
-            ctx.font = '60px Impact, sans-serif';
-            ctx.fillText("SPACE ADVENTURE", 170, 180);
-
-            ctx.font = '30px Impact, sans-serif';
-            ctx.fillText("Press ENTER to start", 330, 260);
-
-            const easy = (this.selection === 0) ? "> EASY" : "  EASY";
-            const normal = (this.selection === 1) ? "> NORMAL" : "  NORMAL";
-            const debug= (this.selection === 2) ? "> DEBUG" : "  DEBUG";
-
-            ctx.fillText(easy, 370, 360);
-            ctx.fillText(normal, 370, 410);
-            ctx.fillText(debug, 370, 460);
-
-            ctx.restore();
-        }
-        else {
+            this.drawTitle(ctx);
+        } else {
             ctx.font = '30px Impact, sans-serif';
             ctx.fillStyle = "Red";
             if (this.game.debugOn) {
@@ -86,5 +70,52 @@ class HUD {
             if (this.game.controller.key === true) checkmark = "\u2713";
             ctx.fillText(`Key: ${checkmark}`, 20, 80);
         }
+    }
+
+    drawTitle(ctx) {
+        ctx.save();
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+        ctx.fillStyle = "white";
+        ctx.font = '60px Impact, sans-serif';
+        ctx.fillText("SPACE ADVENTURE", 170, 180);
+
+        ctx.font = '30px Impact, sans-serif';
+        ctx.fillText("Press ENTER to start", 330, 260);
+
+        const easy = (this.selection === 0) ? "> EASY" : "  EASY";
+        const normal = (this.selection === 1) ? "> NORMAL" : "  NORMAL";
+        const debug = (this.selection === 2) ? "> DEBUG" : "  DEBUG";
+
+        ctx.fillText(easy, 370, 360);
+        ctx.fillText(normal, 370, 410);
+        ctx.fillText(debug, 370, 460);
+
+        ctx.restore();
+    }
+
+    drawEnding(ctx) {
+        ctx.save();
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+        ctx.fillStyle = "white";
+        ctx.font = '60px Impact, sans-serif';
+        ctx.fillText("YOU WIN", 170, 180);
+
+        ctx.font = '30px Impact, sans-serif';
+        ctx.fillText("Ending time: " + this.game.timer.gameTime, 330, 260);
+
+        ctx.restore();
+    }
+
+    drawDeath(ctx) {
+        ctx.save();
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+        ctx.fillStyle = "white";
+        ctx.font = '60px Impact, sans-serif';
+        ctx.fillText("GAME OVER", 170, 180);
+
+        ctx.restore();
     }
 }
