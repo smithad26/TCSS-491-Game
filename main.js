@@ -2,7 +2,7 @@ const gameEngine = new GameEngine();
 
 const ASSET_MANAGER = new AssetManager();
 
-ASSET_MANAGER.queueDownload("./sprites/Astronaut_Player.png");
+ASSET_MANAGER.queueDownload("./sprites/player.png");
 ASSET_MANAGER.queueDownload("./sprites/items.png");
 ASSET_MANAGER.queueDownload("./sprites/traps.png");
 ASSET_MANAGER.queueDownload("./sprites/blocks.png");

@@ -19,11 +19,11 @@ class Character {
         this.lastBB = new BoundingBox(this.x, this.y, 39, 64);
         this.updateBB();
 
-        const sprite = ASSET_MANAGER.getAsset("./sprites/Astronaut_Player.png");
+        const sprite = ASSET_MANAGER.getAsset("./sprites/player.png");
         this.animators = {
-            "idle": new Animator(sprite, 7, 65, 32, 35, 1, 0.15),
-            "walk": new Animator(sprite, 7, 65, 32, 35, 8, 0.15),
-            "jump": new Animator(sprite, 7, 65, 32, 35, 1, 0.15)
+            "idle": new Animator(sprite, 3, 2, 16, 16, 1, 0.15),
+            "walk": new Animator(sprite, 3, 23, 16, 16, 5, 0.15),
+            "jump": new Animator(sprite, 19, 44, 16, 16, 1, 0.15)
         };
     };
 
@@ -170,7 +170,7 @@ class Character {
         if (this.facingleft) {
             ctx.save();
             ctx.scale(-1, 1);
-            this.animators[state].drawFrame(this.game.clockTick, ctx, -(this.x) - 50, this.y);
+            this.animators[state].drawFrame(this.game.clockTick, ctx, -(this.x) - 42, this.y);
             if (this.shieldActive) this.shieldAnimation.drawFrame(this.game.clockTick, ctx, -(this.x) - 46, this.y - 40);
             ctx.restore();
         } else {
@@ -184,9 +184,9 @@ class Character {
         this.lastBB = this.BB;
 
         if (this.facingleft) {
-            this.BB = new BoundingBox(this.x + 10, this.y, 39, 64);
+            this.BB = new BoundingBox(this.x + 10, this.y, 32, 32);
         } else {
-            this.BB = new BoundingBox(this.x, this.y, 39, 64);
+            this.BB = new BoundingBox(this.x, this.y, 32, 32);
         }
 
     };
