@@ -59,9 +59,9 @@ class Character {
             if (currentLevel < levels_list.length) {
                 this.game.controller.loadLevel(levels_list[currentLevel]);
             } else {
-                // Display Ending, restart game
-                currentLevel = 0;
+                this.game.controller.showEndingScreen();
             }
+            return;
         }
         if (this.x < 0) this.x = 1024;
 

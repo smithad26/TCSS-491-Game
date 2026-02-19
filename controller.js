@@ -6,6 +6,9 @@ class GameController {
         this.lives = 0;
         this.key = false;
         this.level = null;
+        
+        this.screen = "title";
+        this.endTime = 0;
     }
 
     clearEntities() {
@@ -28,17 +31,46 @@ class GameController {
             this.lives--;
             this.key = false;
             if (!this.isAlive()) {
-                this.clearEntities();
-                this.game.addEntity(new HUD(this.game));
-                currentLevel = 0;
+                this.showDeathScreen();
                 return;
             }
             this.loadLevel(this.level);
         }
     }
 
+    showMenu() {
+        this.clearEntities();
+        this.lives = 0;
+        this.key = false;
+        this.level = null;
+        this.screen = "title";
+        this.game.debugOn = false;
+        currentLevel = 0;
+        this.game.addEntity(new HUD(this.game));
+    }
+
+    showDeathScreen() {
+        this.clearEntities();
+        this.lives = 0;
+        this.key = false;
+        this.screen = "death";
+        currentLevel = 0;
+        this.game.addEntity(new HUD(this.game));
+    }
+
+    showEndingScreen() {
+        this.clearEntities();
+        this.lives = 0;
+        this.key = false;
+        this.screen = "ending";
+        this.endTime = this.game.timer.gameTime;
+        currentLevel = 0;
+        this.game.addEntity(new HUD(this.game));
+    }
+
     loadLevel(level) {
         this.level = level;
+        this.screen = "playing";
         this.clearEntities();
 
         const entityTypes = {

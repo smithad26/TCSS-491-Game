@@ -1,9 +1,26 @@
-function fillBlocks(startX, startY, countX, countY = 1) {
+const BLOCK_SIZE = 32;
+const CANVAS_WIDTH = 1024;
+const CANVAS_HEIGHT = 768;
+const GRID_COLS = CANVAS_WIDTH / BLOCK_SIZE;
+const GRID_ROWS = CANVAS_HEIGHT / BLOCK_SIZE;
+
+function blockToPixels(block) {
+    return block * BLOCK_SIZE;
+}
+
+function point(x, y) {
+    return {
+        x: blockToPixels(x),
+        y: blockToPixels(y)
+    };
+}
+
+function fillBlocks(startX, startY, countX = 1, countY = 1) {
     const blocks = [];
 
     for (let i = 0; i < countX; i++) {
         for (let j = 0; j < countY; j++) {
-            blocks.push({ x: startX + i * 32, y: startY + j * 32 });
+            blocks.push(point(startX + i, startY + j));
         }
     }
 
@@ -11,56 +28,57 @@ function fillBlocks(startX, startY, countX, countY = 1) {
 }
 
 var levelOne = {
-    player: { x: 50, y: 672 },
+    player: point(2, 21),
     blocks: [
-        ...fillBlocks(0, 736, 33, 1),
-        ...fillBlocks(512, 640, 3, 1)
+        ...fillBlocks(0, GRID_ROWS - 1, GRID_COLS, 1),
+        ...fillBlocks(16, 20, 3, 1)
     ],
     spikes: [
-        { x: 512, y: 704 },
-        { x: 544, y: 704 },
-        { x: 576, y: 704 },
+        ...fillBlocks(16, 22, 3, 1),
     ],
     lasers: [
-        { x: 960, y: 704 },
+        point(30, 22),
     ],
     shields: [
-        { x: 384, y: 704 },
+        point(12, 22),
     ],
     keys: [
-        { x: 448, y: 704 },
+        point(14, 22),
     ],
-    ending: { x: 1024, y: 0},
+    ending: point(GRID_COLS, 0),
 }
 
 var levelTwo = {
-    player: { x: 50, y: 672 },
+    player: point(2, 21),
     blocks: [
-        ...fillBlocks(0, 736, 33, 1),
-        ...fillBlocks(512, 540, 3, 1)
+        ...fillBlocks(0, GRID_ROWS - 1, GRID_COLS, 1),
+        ...fillBlocks(16, 17, 3, 1)
     ],
     spikes: [
-        // ...fillBlocks(512, 640, 3, 1)
-        ...fillBlocks(193, 704, 20, 1),
+        ...fillBlocks(6, 22, 20, 1),
     ],
     lasers: [],
     shields: [],
     keys: [],
-    ending: { x: 1024, y: 0},
+    ending: point(GRID_COLS, 0),
 }
 
 var levelThree = {
-    player: { x: 50, y: 72 },
+    player: point(2, 2),
     blocks: [
-        ...fillBlocks(0, 136, 33, 33),
+        ...fillBlocks(0, 4, GRID_COLS, GRID_ROWS - 4),
     ],
     spikes: [],
     lasers: [],
     shields: [],
     keys: [],
-    ending: { x: 1024, y: 0},
+    ending: point(GRID_COLS, 0),
 }
 
-var levels_list = [levelOne, levelTwo, levelThree];
+var levels_list = [
+    levelOne,
+    levelTwo,
+    levelThree,
+];
 
 var currentLevel = 0;
