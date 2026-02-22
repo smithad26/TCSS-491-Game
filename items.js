@@ -1,5 +1,5 @@
 class Shield {
-    constructor(game, x, y) {
+    constructor(game, x, y, facing = "up") {
         this.game = game;
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/items.png");
         this.animation = new Animator(this.spritesheet, 9, 9, 16, 16, 1, 0.2);
@@ -15,13 +15,27 @@ class Shield {
     }
 
     draw(ctx) {
-        this.animation.drawFrame(this.game.clockTick, ctx, this.x, this.y);
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        if (this.facing === "down") {
+            ctx.rotate(Math.PI);
+            this.animation.drawFrame(this.game.clockTick, ctx, -32, -32);
+        } else if (this.facing === "left") {
+            ctx.rotate((3 * Math.PI) / 2);
+            this.animation.drawFrame(this.game.clockTick, ctx, -32, 0);
+        } else if (this.facing === "right") {
+            ctx.rotate(Math.PI / 2);
+            this.animation.drawFrame(this.game.clockTick, ctx, 0, -32);
+        } else {
+            this.animation.drawFrame(this.game.clockTick, ctx, 0, 0);
+        }
+        ctx.restore();
         this.BB.drawBoundingBox(ctx, this.game);
     }
 }
 
 class Key {
-    constructor(game, x, y) {
+    constructor(game, x, y, facing = "up") {
         this.game = game;
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/items.png");
         this.animation = new Animator(this.spritesheet, 33, 9, 16, 16, 1, 0.2);
@@ -37,7 +51,21 @@ class Key {
     }
 
     draw(ctx) {
-        this.animation.drawFrame(this.game.clockTick, ctx, this.x, this.y);
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        if (this.facing === "down") {
+            ctx.rotate(Math.PI);
+            this.animation.drawFrame(this.game.clockTick, ctx, -32, -32);
+        } else if (this.facing === "left") {
+            ctx.rotate((3 * Math.PI) / 2);
+            this.animation.drawFrame(this.game.clockTick, ctx, -32, 0);
+        } else if (this.facing === "right") {
+            ctx.rotate(Math.PI / 2);
+            this.animation.drawFrame(this.game.clockTick, ctx, 0, -32);
+        } else {
+            this.animation.drawFrame(this.game.clockTick, ctx, 0, 0);
+        }
+        ctx.restore();
         this.BB.drawBoundingBox(ctx, this.game);
     }
 }

@@ -8,10 +8,11 @@ function blockToPixels(block) {
     return block * BLOCK_SIZE;
 }
 
-function point(x, y) {
+function point(x, y, facing = "up") {
     return {
         x: blockToPixels(x),
-        y: blockToPixels(y)
+        y: blockToPixels(y),
+        facing: facing,
     };
 }
 

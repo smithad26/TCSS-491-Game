@@ -87,7 +87,7 @@ class GameController {
         
         for (const [key, EntityClass] of Object.entries(entityTypes)) {
             level[key]?.forEach(item => {
-                this.game.addEntity(new EntityClass(this.game, item.x, item.y));
+                this.game.addEntity(new EntityClass(this.game, item.x, item.y, item.facing));
             });
         }
     }
