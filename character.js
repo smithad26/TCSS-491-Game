@@ -158,6 +158,21 @@ class Character {
                     }
                     that.updateBB();
                 }
+                if (entity instanceof LaserProjectile) {
+                    if (entity.firing) {
+                        if (that.shieldActive) {
+                            if (!that.shieldHit) that.shieldAnimation = new Animator(that.shieldSprite, 9, 9, 16, 16, 2, 0.3, 20);
+                            that.shieldHit = true;
+                            // This delays shield deactivation for 3 seconds.
+                            setInterval(function () {
+                                that.shieldActive = false;
+                                that.shieldHit = false;
+                            }, 3000);
+                        } else {
+                            that.game.controller.damage();
+                        }
+                    }
+                }
             }
         });
 
