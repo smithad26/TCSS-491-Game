@@ -63,10 +63,23 @@ class Character {
             }
             return;
         }
-        if (this.x < 0) this.x = 1024;
+        if (this.x < 0) {
+            if (currentLevel - 1 === -1) {
+                this.x = 64;
+            } else {
+                currentLevel--;
+                this.game.controller.loadLevel(levels_list[currentLevel]);
+            }
+            return;
+        }
 
         this.updateBB();
         this.onGround = false;
+
+        // This stops updateBB() from activating with a new lastBB value in the same collision.
+        // When the player touches a bottom brick and side brick at the same time,
+        // the back-to-back updateBB() causes issues.
+        const frozenLastBB = this.lastBB;
 
         // collision
         var that = this;
@@ -76,7 +89,7 @@ class Character {
                 if (that.velocity.y > 0) {
                     if (entity instanceof Block1) {
                         // Check if the character was above the platform in the last frame
-                        if (that.lastBB.bottom <= entity.BB.top) {
+                        if (frozenLastBB.bottom <= entity.BB.top) {
                             // Land on top of the platform
                             that.y = entity.BB.top - that.BB.height;
                             that.velocity.y = 0;
@@ -85,7 +98,7 @@ class Character {
                         }
                     }
                     if (entity instanceof Spikes) {
-                        if (that.lastBB.bottom <= entity.BB.top) {
+                        if (frozenLastBB.bottom <= entity.BB.top) {
                             that.y = entity.BB.top - that.BB.height;
                             that.velocity.y = 0;
                             that.onGround = true;
@@ -97,7 +110,7 @@ class Character {
                     // Jumping up - check if hitting bottom of platform
                     if (entity instanceof Block1) {
                         // Check if the character was below the platform in the last frame
-                        if (that.lastBB.top >= entity.BB.bottom) {
+                        if (frozenLastBB.top >= entity.BB.bottom) {
                             // Hit bottom of platform
                             that.y = entity.BB.bottom;
                             that.velocity.y = 0;
@@ -105,7 +118,7 @@ class Character {
                         }
                     }
                     if (entity instanceof Spikes) {
-                        if (that.lastBB.top >= entity.BB.bottom) {
+                        if (frozenLastBB.top >= entity.BB.bottom) {
                             that.y = entity.BB.bottom;
                             that.velocity.y = 0;
                             that.updateBB();
