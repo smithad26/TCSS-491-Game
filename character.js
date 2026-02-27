@@ -64,12 +64,7 @@ class Character {
             return;
         }
         if (this.x < 0) {
-            if (currentLevel - 1 === -1) {
-                this.x = 64;
-            } else {
-                currentLevel--;
-                this.game.controller.loadLevel(levels_list[currentLevel]);
-            }
+            this.x = 64;
             return;
         }
 

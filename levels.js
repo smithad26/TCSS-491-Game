@@ -52,7 +52,6 @@ var levelOne = {
 var levelTwo = {
     player: point(2, 21),
     blocks: [
-        ...fillBlocks(0, 20, 1, 3),
         ...fillBlocks(0, GRID_ROWS - 1, GRID_COLS, 1),
         ...fillBlocks(16, 17, 3, 1)
     ],
@@ -68,7 +67,6 @@ var levelTwo = {
 var levelThree = {
     player: point(2, 2),
     blocks: [
-        ...fillBlocks(0, 2, 1, 2),
         ...fillBlocks(0, 4, GRID_COLS, GRID_ROWS - 4),
     ],
     spikes: [],
@@ -81,7 +79,6 @@ var levelThree = {
 var levelFour = {
     player: point(2, 21),
     blocks: [
-        ...fillBlocks(0, 20, 1, 3),
         ...fillBlocks(0, GRID_ROWS - 1, GRID_COLS, 1),
         ...fillBlocks(8, 18, 4, 1),
         ...fillBlocks(20, 15, 4, 1),
@@ -106,7 +103,6 @@ var levelFour = {
 var levelFive = {
     player: point(2, 21),
     blocks: [
-        ...fillBlocks(0, 20, 1, 3),
         ...fillBlocks(0, GRID_ROWS - 1, GRID_COLS, 1),
         ...fillBlocks(6, 20, 2, 1),
         ...fillBlocks(12, 17, 3, 1),
