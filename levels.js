@@ -29,6 +29,10 @@ function fillBlocks(startX, startY, countX = 1, countY = 1) {
 }
 
 var levelOne = {
+
+}
+
+var levelOne = {
     player: point(2, 21),
     blocks: [
         ...fillBlocks(0, GRID_ROWS - 1, GRID_COLS, 1),
@@ -65,18 +69,6 @@ var levelTwo = {
 }
 
 var levelThree = {
-    player: point(2, 2),
-    blocks: [
-        ...fillBlocks(0, 4, GRID_COLS, GRID_ROWS - 4),
-    ],
-    spikes: [],
-    lasers: [],
-    shields: [],
-    keys: [],
-    ending: point(GRID_COLS, 0),
-}
-
-var levelFour = {
     player: point(2, 21),
     blocks: [
         ...fillBlocks(0, GRID_ROWS - 1, GRID_COLS, 1),
@@ -100,7 +92,7 @@ var levelFour = {
     ending: point(GRID_COLS, 0),
 }
 
-var levelFive = {
+var levelFour = {
     player: point(2, 21),
     blocks: [
         ...fillBlocks(0, GRID_ROWS - 1, GRID_COLS, 1),
@@ -125,6 +117,24 @@ var levelFive = {
         point(27, 10),
     ],
     ending: point(GRID_COLS, 0),
+}
+
+var levelFive = {
+    player: point(1, 19),
+    blocks: [
+        ...fillBlocks(0, GRID_ROWS - 1, GRID_COLS, 1),
+        ...fillBlocks(0, 20, 3, 1),
+        ...fillBlocks(6, 13, 4, 1),
+    ],
+    spikes: [
+        ...fillBlocks(0, GRID_ROWS - 2, GRID_COLS, 1),
+        point(6, 12),
+        point(9, 12),
+    ],
+    lasers: [
+        point(0, 18),
+        point(0, 12),
+    ],
 }
 
 var levels_list = [
