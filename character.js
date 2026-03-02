@@ -45,9 +45,11 @@ class Character {
             this.facingleft = false; 
         }
 
-        if ((keys["w"] || keys["ArrowUp"] || keys[" "]) && this.onGround) {
+        if (keys["w"] || keys["ArrowUp"] || keys[" "]) {
             state = "jump"; 
-            this.velocity.y = -550;
+            if (this.onGround) {
+                this.velocity.y = -500;
+            }
         }
 
         // gravity physics 

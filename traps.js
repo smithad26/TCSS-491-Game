@@ -2,7 +2,7 @@ class Spikes {
     constructor(game, x, y, facing = "up") {
         this.game = game;
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/traps.png");
-        this.animation = new Animator(this.spritesheet, 16, 25, 16, 16, 1, 0.2);
+        this.animation = new Animator(this.spritesheet, 16, 25, 16, 16, 14, 0.1);
 
         this.x = x;
         this.y = y;
@@ -40,8 +40,8 @@ class LaserProjectile {
     constructor(game, x, y, facing = "up") {
         this.game = game;
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/traps.png");
-        this.animation = new Animator(this.spritesheet, 16, 49, 16, 16, 1, 0.2);
-        this.fireAnimation = new Animator(this.spritesheet, 24, 49, 256, 16, 5, 1, 500);
+        this.animation = new Animator(this.spritesheet, 16, 49, 16, 16, 12, 0.1);
+        this.fireAnimation = new Animator(this.spritesheet, 2, 70, 256, 16, 5, 1, 500);
         this.firing = false;
 
         this.x = x;
