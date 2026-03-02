@@ -48,7 +48,7 @@ class Character {
         if (keys["w"] || keys["ArrowUp"] || keys[" "]) {
             state = "jump"; 
             if (this.onGround) {
-                this.velocity.y = -500;
+                this.velocity.y = -550;
             }
         }
 
