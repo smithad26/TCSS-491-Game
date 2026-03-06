@@ -53,14 +53,33 @@ var levelOne = {
     ending: point(GRID_COLS, 0),
 }
 
+// Level 2: Zigzag ladder of 8 platforms from bottom-left to top-right.
+// Each platform has a bouncing spike. Exit at top-right (cols 29-31, row 2).
+// Grid: 32 cols (0-31), 24 rows (0-23). Floor at row 23.
 var levelTwo = {
     player: point(2, 21),
     blocks: [
-        ...fillBlocks(0, GRID_ROWS - 1, GRID_COLS, 1),
-        ...fillBlocks(16, 17, 3, 1)
+        ...fillBlocks(0, GRID_ROWS - 1, GRID_COLS, 1),  // floor
+        ...fillBlocks(3,  20, 3, 1),  // P1 left
+        ...fillBlocks(10, 18, 3, 1),  // P2 right
+        ...fillBlocks(4,  16, 3, 1),  // P3 left
+        ...fillBlocks(12, 14, 3, 1),  // P4 right
+        ...fillBlocks(5,  11, 3, 1),  // P5 left
+        ...fillBlocks(14, 9,  3, 1),  // P6 right
+        ...fillBlocks(7,  6,  3, 1),  // P7 left
+        ...fillBlocks(16, 4,  3, 1),  // P8 right
+        ...fillBlocks(29, 2,  3, 1),  // exit platform (cols 29-31, row 2)
     ],
-    spikes: [
-        ...fillBlocks(6, 22, 20, 1),
+    spikes: [],
+    bouncingSpikes: [
+        point(4,  20), // on P1
+        point(11, 18), // on P2
+        point(5,  16), // on P3
+        point(13, 14), // on P4
+        point(6,  11), // on P5
+        point(15, 9),  // on P6
+        point(8,  6),  // on P7
+        point(17, 4),  // on P8
     ],
     lasers: [],
     shields: [],

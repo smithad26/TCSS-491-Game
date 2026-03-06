@@ -94,7 +94,7 @@ class Character {
                             that.updateBB();
                         }
                     }
-                    if (entity instanceof Spikes) {
+                    if (entity instanceof Spikes || entity instanceof BouncingSpike) {
                         if (frozenLastBB.bottom <= entity.BB.top) {
                             that.y = entity.BB.top - that.BB.height;
                             that.velocity.y = 0;
@@ -114,7 +114,7 @@ class Character {
                             that.updateBB();
                         }
                     }
-                    if (entity instanceof Spikes) {
+                    if (entity instanceof Spikes || entity instanceof BouncingSpike) {
                         if (frozenLastBB.top >= entity.BB.bottom) {
                             that.y = entity.BB.bottom;
                             that.velocity.y = 0;
@@ -145,7 +145,7 @@ class Character {
                     entity.removeFromWorld = true;
                     that.game.controller.setKey(true);
                 }
-                if (entity instanceof Spikes) {
+                if (entity instanceof Spikes || entity instanceof BouncingSpike) {
                     if (that.BB.collide(entity.leftBB)) {
                         that.x = entity.BB.left - (entity.BB.width + 8);
                         if (that.facingleft) that.x = entity.BB.left - (entity.BB.width + 18);

@@ -76,6 +76,7 @@ class GameController {
         const entityTypes = {
             blocks: Block1,
             spikes: Spikes,
+            bouncingSpikes: BouncingSpike,
             lasers: LaserProjectile,
             shields: Shield,
             keys: Key,
