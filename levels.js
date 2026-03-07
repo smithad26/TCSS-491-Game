@@ -29,10 +29,6 @@ function fillBlocks(startX, startY, countX = 1, countY = 1) {
 }
 
 var levelOne = {
-
-}
-
-var levelOne = {
     player: point(2, 21),
     blocks: [
         ...fillBlocks(0, GRID_ROWS - 1, GRID_COLS, 1),
@@ -60,6 +56,7 @@ var levelTwo = {
     player: point(2, 21),
     blocks: [
         ...fillBlocks(0, GRID_ROWS - 1, GRID_COLS, 1),  // floor
+        ...fillBlocks(31, 3, 1, GRID_ROWS - 3),  // floor
         ...fillBlocks(3,  20, 3, 1),  // P1 left
         ...fillBlocks(10, 18, 3, 1),  // P2 right
         ...fillBlocks(4,  16, 3, 1),  // P3 left
@@ -154,6 +151,38 @@ var levelFive = {
         point(0, 18),
         point(0, 12),
     ],
+    ending: point(GRID_COLS, 0),
+}
+
+var levelSix = {
+    player: point(1, 19),
+    blocks: [
+        ...fillBlocks(0, GRID_ROWS - 1, GRID_COLS, 1),
+        ...fillBlocks(0, 0, GRID_COLS, 1),
+        ...fillBlocks(31, 3, 1, 20),
+        ...fillBlocks(5, 16, 1, 7),
+        ...fillBlocks(8, 21, 3, 1),
+        ...fillBlocks(13, 1, 1, 13),
+        ...fillBlocks(16, 16, 3, 1),
+        ...fillBlocks(14, 13, 15, 1),
+        ...fillBlocks(28, 21, 3, 1),
+        ...fillBlocks(16, 8, 15, 1),
+        ...fillBlocks(23, 3, 1, 5),
+        ...fillBlocks(27, 1, 1, 5),
+    ],
+    spikes: [
+        ...fillBlocks(6, 22, GRID_COLS - 6, 1),
+    ],
+    bouncingSpikes: [
+        point(9, 21),
+        point(17, 16),
+        point(29, 21),
+    ],
+    lasers: [
+        ...fillBlocks(14, 9, 1, 1),
+        ...fillBlocks(14, 2, 1, 1),
+    ],
+    ending: point(GRID_COLS, 0),
 }
 
 var levels_list = [
@@ -162,6 +191,7 @@ var levels_list = [
     levelThree,
     levelFour,
     levelFive,
+    levelSix,
 ];
 
 var currentLevel = 0;

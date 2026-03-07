@@ -33,9 +33,11 @@ class HUD {
             if (this.selection === 0) {
                 this.game.controller.lives = 20;
                 this.game.debugOn = false;
+                this.game.music.play();
             } else if (this.selection === 1) {
                 this.game.controller.lives = 1;
                 this.game.debugOn = false;
+                this.game.music.play();
             } else if (this.selection === 2) {
                 this.game.controller.lives = 1;
                 this.game.debugOn = true;
@@ -50,7 +52,7 @@ class HUD {
         }
 
         if (this.game.controller.screen === "levelselect") {
-            const optionCount = 5;
+            const optionCount = 6;
             if (wPressed) {
                 this.selection = (this.selection - 1 + optionCount) % optionCount;
             }
@@ -63,6 +65,7 @@ class HUD {
 
             currentLevel = this.selection;
             this.game.controller.loadLevel(levels_list[currentLevel]);
+            this.game.music.play();
             return;
         }
 
@@ -112,6 +115,7 @@ class HUD {
     }
 
     drawGameplayHUD(ctx) {
+
         const panelX = 16;
         const panelY = 16;
         const panelWidth = 324;
@@ -318,7 +322,7 @@ class HUD {
         const panelY = (height - panelHeight) / 2 + 50;
         const titleY = panelY - 80;
 
-        const options = ["LEVEL 1", "LEVEL 2", "LEVEL 3", "LEVEL 4", "LEVEL 5"];
+        const options = ["LEVEL 1", "LEVEL 2", "LEVEL 3", "LEVEL 4", "LEVEL 5", "LEVEL 6"];
         const boxWidth = 340;
         const boxHeight = 58;
         const boxGap = 72;
@@ -379,11 +383,11 @@ class HUD {
 
         ctx.fillStyle = "#9bb7d0";
         ctx.font = '18px Impact, sans-serif';
-        ctx.fillText("W/S OR ARROW KEYS TO CHOOSE", centerX, panelY + panelHeight - 62);
+        ctx.fillText("W/S OR ARROW KEYS TO CHOOSE", centerX, panelY + panelHeight - 10);
 
         ctx.fillStyle = "#ffe799";
         ctx.font = '28px Impact, sans-serif';
-        ctx.fillText("PRESS ENTER TO START", centerX, panelY + panelHeight - 28);
+        ctx.fillText("PRESS ENTER TO START", centerX, panelY + panelHeight + 20);
 
         ctx.restore();
     }

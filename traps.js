@@ -132,7 +132,7 @@ class LaserProjectile {
         this.x = x;
         this.y = y;
 
-        this.BB = new BoundingBox(this.x, this.y, 518, 32);
+        this.BB = new BoundingBox(this.x, this.y, 480, 32);
         this.updateBB();
     }
 

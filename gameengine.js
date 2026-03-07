@@ -18,6 +18,50 @@ class GameEngine {
 
         this.debugOn = false;
 
+        this.music = new Audio('./sounds/slow-travel.wav');
+        this.music.loop = true;
+        this.music.volume = 0.1;
+
+        this.backgroundImages = [
+            './backgrounds/planet.png',
+            './backgrounds/stars1.png',
+            './backgrounds/stars2.png',
+            './backgrounds/stars3.png',
+            './backgrounds/stars4.png',
+            './backgrounds/stars5.png',
+        ].map(src => {
+            const img = new Image();
+            img.src = src;
+            return img;
+        });
+
+        this.backgroundLayout = [
+            [0,  0,  3],
+            [5,  0,  1],
+            [10, 0,  4],
+            [15, 0,  2],
+            [20, 0,  5],
+            [26, 0,  1],
+            [0,  6,  3],
+            [5,  6,  5],
+            [10, 6,  2],
+            [15, 6,  4],
+            [20, 6,  0],
+            [26, 6,  3],
+            [0,  12, 5],
+            [5,  12, 2],
+            [10, 12, 4],
+            [15, 12, 1],
+            [20, 12, 3],
+            [26, 12, 5],
+            [0,  18, 2],
+            [5,  18, 4],
+            [10, 18, 1],
+            [15, 18, 5],
+            [20, 18, 3],
+            [26, 18, 2],
+        ];
+
         // Options and the Details
         this.options = options || {
             debugging: false,
@@ -86,6 +130,15 @@ class GameEngine {
     draw() {
         // Clear the whole canvas with transparent color (rgba(0, 0, 0, 0))
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+
+        if (this.controller.screen === "playing") {
+            this.backgroundLayout.forEach(([col, row, imgIndex]) => {
+                const img = this.backgroundImages[imgIndex];
+                if (img && img.complete) {
+                    this.ctx.drawImage(img, col * BLOCK_SIZE, row * BLOCK_SIZE);
+                }
+            });
+        }
 
         // Draw latest things first
         for (let i = this.entities.length - 1; i >= 0; i--) {
