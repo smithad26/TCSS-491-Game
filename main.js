@@ -6,8 +6,11 @@ ASSET_MANAGER.queueDownload("./sprites/player.png");
 ASSET_MANAGER.queueDownload("./sprites/items.png");
 ASSET_MANAGER.queueDownload("./sprites/traps.png");
 ASSET_MANAGER.queueDownload("./sprites/blocks.png");
+ASSET_MANAGER.queueDownload("./backgrounds/planet.png");
+ASSET_MANAGER.queueDownload("./sounds/slow-travel.wav");
 
 ASSET_MANAGER.downloadAll(() => {
+
 	const canvas = document.getElementById("gameWorld");
 	const ctx = canvas.getContext("2d");
 	ctx.imageSmoothingEnabled = false;
