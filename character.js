@@ -12,6 +12,7 @@ class Character {
         this.fallAcc = 562.5;
         this.shieldActive = false;
         this.shieldHit = false;
+        this.hasKey = false;
         this.shieldSprite = ASSET_MANAGER.getAsset("./sprites/items.png");
         this.shieldAnimation = new Animator(this.shieldSprite, 9, 9, 16, 16, 1, 0.2, 20);
 
@@ -84,7 +85,7 @@ class Character {
             if (entity.BB && that.BB.collide(entity.BB)) {
                 // These two ifs are for vertical collisions (like landing on ground)
                 if (that.velocity.y > 0) {
-                    if (entity instanceof Block1) {
+                    if (entity instanceof Block1 || (entity instanceof Door && !that.hasKey)) {
                         // Check if the character was above the platform in the last frame
                         if (frozenLastBB.bottom <= entity.BB.top) {
                             // Land on top of the platform
@@ -105,7 +106,7 @@ class Character {
                 }
                 if (that.velocity.y < 0) {
                     // Jumping up - check if hitting bottom of platform
-                    if (entity instanceof Block1) {
+                    if (entity instanceof Block1 || (entity instanceof Door && !that.hasKey)) {
                         // Check if the character was below the platform in the last frame
                         if (frozenLastBB.top >= entity.BB.bottom) {
                             // Hit bottom of platform
@@ -123,7 +124,7 @@ class Character {
                     }
                 }
                 // Hit block from side
-                if (entity instanceof Block1) {
+                if (entity instanceof Block1 || (entity instanceof Door && !that.hasKey)) {
                     if (that.BB.collide(entity.leftBB)) {
                         that.x = entity.BB.left - (entity.BB.width + 8);
                         // This line below stops players from getting stuck
@@ -142,6 +143,7 @@ class Character {
                     that.shieldActive = true;
                 }
                 if (entity instanceof Key) {
+                    that.hasKey = true;
                     entity.removeFromWorld = true;
                     that.game.controller.setKey(true);
                 }

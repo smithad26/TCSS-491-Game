@@ -47,6 +47,9 @@ var levelOne = {
     shields: [
         point(12, 22),
     ],
+    doors: [
+        point(24, 21),
+    ],
     keys: [
         point(14, 22),
     ],

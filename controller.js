@@ -79,6 +79,7 @@ class GameController {
             bouncingSpikes: BouncingSpike,
             lasers: LaserProjectile,
             shields: Shield,
+            doors: Door,
             keys: Key,
         };
 
