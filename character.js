@@ -14,7 +14,7 @@ class Character {
         this.shieldHit = false;
         this.hasKey = false;
         this.shieldSprite = ASSET_MANAGER.getAsset("./sprites/items.png");
-        this.shieldAnimation = new Animator(this.shieldSprite, 9, 9, 16, 16, 1, 0.2, 20);
+        this.shieldAnimation = new Animator(this.shieldSprite, 143, 9, 16, 16, 1, 0.2, 20);
 
         // lastBB assigned here to avoid game start collision bug.
         this.lastBB = new BoundingBox(this.x, this.y, 39, 64);
@@ -158,7 +158,7 @@ class Character {
                     }
                     // Damage check and shield check here.
                     if (that.shieldActive) {
-                        if (!that.shieldHit) that.shieldAnimation = new Animator(that.shieldSprite, 9, 9, 16, 16, 2, 0.3, 20);
+                        if (!that.shieldHit) that.shieldAnimation = new Animator(that.shieldSprite, 143, 9, 16, 16, 2, 0.3, 20);
                         that.shieldHit = true;
                         // This delays shield deactivation for 3 seconds.
                         setInterval(function () {
@@ -173,7 +173,7 @@ class Character {
                 if (entity instanceof LaserProjectile) {
                     if (entity.firing) {
                         if (that.shieldActive) {
-                            if (!that.shieldHit) that.shieldAnimation = new Animator(that.shieldSprite, 9, 9, 16, 16, 2, 0.3, 20);
+                            if (!that.shieldHit) that.shieldAnimation = new Animator(that.shieldSprite, 143, 9, 16, 16, 2, 0.3, 20);
                             that.shieldHit = true;
                             // This delays shield deactivation for 3 seconds.
                             setInterval(function () {

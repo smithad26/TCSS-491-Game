@@ -2,7 +2,7 @@ class Shield {
     constructor(game, x, y, facing = "up") {
         this.game = game;
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/items.png");
-        this.animation = new Animator(this.spritesheet, 9, 9, 16, 16, 1, 0.2);
+        this.animation = new Animator(this.spritesheet, 9, 9, 16, 16, 8, 0.2);
 
         this.x = x;
         this.y = y;
@@ -38,7 +38,7 @@ class Key {
     constructor(game, x, y, facing = "up") {
         this.game = game;
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/items.png");
-        this.animation = new Animator(this.spritesheet, 33, 9, 16, 16, 1, 0.2);
+        this.animation = new Animator(this.spritesheet, 13, 36, 8, 16, 8, 0.2);
 
         this.x = x;
         this.y = y;
