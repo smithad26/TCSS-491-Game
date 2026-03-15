@@ -310,7 +310,7 @@ class Bomb {
     constructor(game, x, y) {
         this.game = game;
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/traps.png");
-        this.bombAnimation = new Animator(this.spritesheet, 58, 88, 21, 25, 2, 0.4, 0);
+        this.bombAnimation = new Animator(this.spritesheet, 58, 88, 21, 25, 1, 0.2, 0);
 
         this.x = x;
         this.y = y;

@@ -121,6 +121,9 @@ var levelThree = {
         point(26, 22),
         point(28, 22),
     ],
+    bombs: [
+        point(14,7),
+    ],
     shields: [
         point(6, 22),
     ],
@@ -147,6 +150,9 @@ var levelFour = {
         point(14, 16),
         point(22, 13),
         point(28, 10),
+    ],
+    bombs: [
+        point(9,7),
     ],
     shields: [
         point(4, 22),
@@ -203,6 +209,11 @@ var levelSix = {
     lasers: [
         ...fillBlocks(14, 9, 1, 1),
         ...fillBlocks(14, 2, 1, 1),
+    ],
+    bombs: [
+        point(16,5),
+        point(21,20),
+        point(5,10),
     ],
     ending: point(GRID_COLS, 0),
 }
