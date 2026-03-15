@@ -16,12 +16,12 @@ function point(x, y, facing = "up") {
     };
 }
 
-function fillBlocks(startX, startY, countX = 1, countY = 1) {
+function fillBlocks(startX, startY, countX = 1, countY = 1, facing = "up") {
     const blocks = [];
 
     for (let i = 0; i < countX; i++) {
         for (let j = 0; j < countY; j++) {
-            blocks.push(point(startX + i, startY + j));
+            blocks.push(point(startX + i, startY + j, facing));
         }
     }
 
@@ -59,18 +59,27 @@ var levelTwo = {
     player: point(2, 21),
     blocks: [
         ...fillBlocks(0, GRID_ROWS - 1, GRID_COLS, 1),  // floor
-        ...fillBlocks(31, 3, 1, GRID_ROWS - 3),  // floor
-        ...fillBlocks(3,  20, 3, 1),  // P1 left
-        ...fillBlocks(10, 18, 3, 1),  // P2 right
-        ...fillBlocks(4,  16, 3, 1),  // P3 left
-        ...fillBlocks(12, 14, 3, 1),  // P4 right
-        ...fillBlocks(5,  11, 3, 1),  // P5 left
-        ...fillBlocks(14, 9,  3, 1),  // P6 right
-        ...fillBlocks(7,  6,  3, 1),  // P7 left
-        ...fillBlocks(16, 4,  3, 1),  // P8 right
+        ...fillBlocks(31, 3, 1, GRID_ROWS - 3),  // right wall
         ...fillBlocks(29, 2,  3, 1),  // exit platform (cols 29-31, row 2)
+        // Enclosed room
+        ...fillBlocks(0, 2, 4, 1),   // top wall (0-3, row 2)
+        ...fillBlocks(0, 7, 4, 1),   // bottom wall (0-3, row 7)
+        ...fillBlocks(4, 3, 1, 2),   // right wall above door (4, rows 3-4)
+        ...fillBlocks(4, 7, 1, 1),   // right wall below door (4, row 7)
     ],
-    spikes: [],
+    movingBlocks: [
+        ...fillBlocks(3,  20, 3, 1, "right"),  // P1 right
+        ...fillBlocks(10, 18, 3, 1, "left"),   // P2 left
+        ...fillBlocks(4,  16, 3, 1, "right"),  // P3 right
+        ...fillBlocks(12, 14, 3, 1, "left"),   // P4 left
+        ...fillBlocks(5,  11, 3, 1, "right"),  // P5 right
+        ...fillBlocks(14, 9,  3, 1, "left"),   // P6 left
+        ...fillBlocks(7,  6,  3, 1, "right"),  // P7 right
+        ...fillBlocks(16, 4,  3, 1, "left"),   // P8 left
+    ],
+    spikes: [
+        ...fillBlocks(5, 22, 26, 1), // floor spikes (5,22) to (30,22)
+    ],
     bouncingSpikes: [
         point(4,  20), // on P1
         point(11, 18), // on P2
@@ -81,9 +90,19 @@ var levelTwo = {
         point(8,  6),  // on P7
         point(17, 4),  // on P8
     ],
+    rngSpikes: [
+        point(1, 7),   // inside enclosed room, pops up from floor
+    ],
     lasers: [],
-    shields: [],
-    keys: [],
+    shields: [
+        point(0, 6),   // shield inside enclosed room
+    ],
+    doors: [
+        point(4, 5),   // door to enclosed room (2 tiles tall, rows 5-6)
+    ],
+    keys: [
+        point(15, 3),  // key on P8 platform area
+    ],
     ending: point(GRID_COLS, 0),
 }
 

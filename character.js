@@ -85,7 +85,7 @@ class Character {
             if (entity.BB && that.BB.collide(entity.BB)) {
                 // These two ifs are for vertical collisions (like landing on ground)
                 if (that.velocity.y > 0) {
-                    if (entity instanceof Block1 || (entity instanceof Door && !that.hasKey)) {
+                    if (entity instanceof Block1 || entity instanceof MovingBlock || (entity instanceof Door && !that.hasKey)) {
                         // Check if the character was above the platform in the last frame
                         if (frozenLastBB.bottom <= entity.BB.top) {
                             // Land on top of the platform
@@ -95,7 +95,7 @@ class Character {
                             that.updateBB();
                         }
                     }
-                    if (entity instanceof Spikes || entity instanceof BouncingSpike) {
+                    if (entity instanceof Spikes || entity instanceof BouncingSpike || entity instanceof RNGSpike) {
                         if (frozenLastBB.bottom <= entity.BB.top) {
                             that.y = entity.BB.top - that.BB.height;
                             that.velocity.y = 0;
@@ -106,7 +106,7 @@ class Character {
                 }
                 if (that.velocity.y < 0) {
                     // Jumping up - check if hitting bottom of platform
-                    if (entity instanceof Block1 || (entity instanceof Door && !that.hasKey)) {
+                    if (entity instanceof Block1 || entity instanceof MovingBlock || (entity instanceof Door && !that.hasKey)) {
                         // Check if the character was below the platform in the last frame
                         if (frozenLastBB.top >= entity.BB.bottom) {
                             // Hit bottom of platform
@@ -115,7 +115,7 @@ class Character {
                             that.updateBB();
                         }
                     }
-                    if (entity instanceof Spikes || entity instanceof BouncingSpike) {
+                    if (entity instanceof Spikes || entity instanceof BouncingSpike || entity instanceof RNGSpike) {
                         if (frozenLastBB.top >= entity.BB.bottom) {
                             that.y = entity.BB.bottom;
                             that.velocity.y = 0;
@@ -124,7 +124,7 @@ class Character {
                     }
                 }
                 // Hit block from side
-                if (entity instanceof Block1 || (entity instanceof Door && !that.hasKey)) {
+                if (entity instanceof Block1 || entity instanceof MovingBlock || (entity instanceof Door && !that.hasKey)) {
                     if (that.BB.collide(entity.leftBB)) {
                         that.x = entity.BB.left - (entity.BB.width + 8);
                         // This line below stops players from getting stuck
@@ -147,7 +147,7 @@ class Character {
                     entity.removeFromWorld = true;
                     that.game.controller.setKey(true);
                 }
-                if (entity instanceof Spikes || entity instanceof BouncingSpike) {
+                if (entity instanceof Spikes || entity instanceof BouncingSpike || entity instanceof RNGSpike) {
                     if (that.BB.collide(entity.leftBB)) {
                         that.x = entity.BB.left - (entity.BB.width + 8);
                         if (that.facingleft) that.x = entity.BB.left - (entity.BB.width + 18);
@@ -183,6 +183,23 @@ class Character {
                         } else {
                             that.game.controller.damage();
                         }
+                    }
+                }
+                if (entity instanceof Bomb) {
+                    // Push bomb away from player
+                    const pushForce = 300;
+                    const overlapX = (that.BB.left + that.BB.width / 2) - (entity.BB.left + entity.BB.width / 2);
+                    if (overlapX < 0) {
+                        entity.velocity.x = pushForce;
+                    } else {
+                        entity.velocity.x = -pushForce;
+                    }
+                    // If player lands on top of bomb, bounce it down and push player up
+                    if (frozenLastBB.bottom <= entity.BB.top + 4) {
+                        entity.velocity.y = 200;
+                        that.velocity.y = -300;
+                        that.y = entity.BB.top - that.BB.height;
+                        that.onGround = false;
                     }
                 }
             }

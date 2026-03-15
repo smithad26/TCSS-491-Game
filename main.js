@@ -10,15 +10,22 @@ ASSET_MANAGER.queueDownload("./backgrounds/planet.png");
 ASSET_MANAGER.queueDownload("./sounds/slow-travel.wav");
 
 ASSET_MANAGER.downloadAll(() => {
+	const startGame = () => {
+		const canvas = document.getElementById("gameWorld");
+		const ctx = canvas.getContext("2d");
+		ctx.imageSmoothingEnabled = false;
 
-	const canvas = document.getElementById("gameWorld");
-	const ctx = canvas.getContext("2d");
-	ctx.imageSmoothingEnabled = false;
+		new GameController(gameEngine);
+		gameEngine.addEntity(new HUD(gameEngine));
 
-	new GameController(gameEngine);
-	gameEngine.addEntity(new HUD(gameEngine));
+		gameEngine.init(ctx);
 
-	gameEngine.init(ctx);
+		gameEngine.start();
+	};
 
-	gameEngine.start();
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", startGame);
+	} else {
+		startGame();
+	}
 });

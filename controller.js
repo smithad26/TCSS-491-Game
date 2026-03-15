@@ -81,6 +81,9 @@ class GameController {
             shields: Shield,
             doors: Door,
             keys: Key,
+            bombs: Bomb,
+            rngSpikes: RNGSpike,
+            movingBlocks: MovingBlock,
         };
 
         this.game.addEntity(new HUD(this.game));
