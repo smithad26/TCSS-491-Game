@@ -121,6 +121,10 @@ class BouncingSpike {
         if (!this.extended) return;
 
         ctx.save();
+        // Clip so the spike is only visible above the block surface
+        ctx.beginPath();
+        ctx.rect(this.x, this.baseY - this.riseHeight, 32, this.riseHeight);
+        ctx.clip();
         ctx.translate(this.x, this.y);
         if (this.facing === "down") {
             ctx.rotate(Math.PI);
@@ -280,6 +284,10 @@ class RNGSpike {
         if (!this.extended) return;
 
         ctx.save();
+        // Clip so the spike is only visible above the block surface
+        ctx.beginPath();
+        ctx.rect(this.x, this.baseY - this.riseHeight, 32, this.riseHeight);
+        ctx.clip();
         ctx.translate(this.x, this.y);
         if (this.facing === "down") {
             ctx.rotate(Math.PI);
